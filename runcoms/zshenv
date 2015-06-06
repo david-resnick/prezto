@@ -13,3 +13,4 @@ fi
 export FLEETCTL_ENDPOINT=http://10.23.23.23:4001
 export IDEA_JDK=`/usr/libexec/java_home -v 1.7`
 export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export P4CONFIG=.p4config
