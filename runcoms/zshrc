@@ -12,8 +12,28 @@ fi
 
 # Customize to your needs...
 
-# $(boot2docker shellinit)
+# eval "$(docker-machine env dev2)"
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-. /usr/local/share/zsh/site-functions/_aws
+source /usr/local/bin/aws_zsh_completer.sh
+
+function _ec2ssh() { ssh $(cap $1 ec2:status | tail -n 1 | cut -f 6 -d " ") }
+alias ec2ssh="_ec2ssh"
+
+function _gitIgnoreAllVcsh() {
+  for repo in $(vcsh list); do
+    vcsh write-gitignore $repo
+    vcsh $repo add -f .gitignore.d/$repo
+    vcsh write-gitignore $repo
+    vcsh $repo add .gitignore.d/$repo
+    vcsh $repo commit -m "Add/update .gitignore.d/$repo"
+  done
+}
+alias gitIgnoreAllVcsh="_gitIgnoreAllVcsh"
+
+PATH="/Users/davidresnick/perl5/bin${PATH+:}${PATH}"; export PATH;
+PERL5LIB="/Users/davidresnick/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/davidresnick/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/davidresnick/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/davidresnick/perl5"; export PERL_MM_OPT;
